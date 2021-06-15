@@ -38,7 +38,7 @@ const Navigation = ({ vertical }) => {
         <span>Shorts</span>
       </StyledLink>
 
-      {user && (
+      {user ? (
         <>
           <StyledLink to="/admin">
             <span>Admin</span>
@@ -47,6 +47,10 @@ const Navigation = ({ vertical }) => {
             <span>Log Out</span>
           </StyledIconButton>
         </>
+      ) : (
+        <StyledLink to="/signin">
+          <span>Sign In</span>
+        </StyledLink>
       )}
       {/* <StyledIconButton type="button" onClick={() => dispatch(toggleGlass())}>
         <span>Glass</span>

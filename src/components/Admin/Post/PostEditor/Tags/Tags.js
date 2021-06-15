@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import CreatableSelect from 'react-select/creatable';
 import { useDispatch, useSelector } from 'react-redux';
 import { StyledTags } from './styles';
-import { selectPostData, postTagsChanged } from '../../../../store/post';
+import { selectPostData, postTagsChanged } from '../../../../../store/post';
 
 const components = {
   DropdownIndicator: null,

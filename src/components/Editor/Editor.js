@@ -10,7 +10,7 @@ import FirebaseUploadAdapter from './FirebaseUploadAdapter';
 import {
   selectPostData,
   postContentChanged,
-  selectEditorLoading,
+  selectPostLoading,
 } from '../../store/post';
 
 const Loading = styled.div``;
@@ -32,6 +32,7 @@ const editorConfiguration = {
       'Alignment',
       'Outdent',
       'Indent',
+      'HorizontalLine',
       '|',
       'BlockQuote',
       'BulletedList',
@@ -91,7 +92,7 @@ const editorConfiguration = {
 
 const Editor = () => {
   const { content } = useSelector(selectPostData);
-  const loading = useSelector(selectEditorLoading);
+  const loading = useSelector(selectPostLoading);
   const dispatch = useDispatch();
 
   const onChange = (event, editor) => {
@@ -106,24 +107,17 @@ const Editor = () => {
           <p>Loading...</p>
         </Loading>
       ) : (
-        <>
-          <CKEditor
-            editor={CustomEditor}
-            config={editorConfiguration}
-            data={content}
-            onReady={(editor) => {
-              editor.plugins.get('FileRepository').createUploadAdapter = (
-                loader
-              ) => new FirebaseUploadAdapter(loader);
-            }}
-            onChange={onChange}
-          />
-          <div
-            className="ck-content"
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{ __html: content }}
-          />
-        </>
+        <CKEditor
+          editor={CustomEditor}
+          config={editorConfiguration}
+          data={content}
+          onReady={(editor) => {
+            editor.plugins.get('FileRepository').createUploadAdapter = (
+              loader
+            ) => new FirebaseUploadAdapter(loader);
+          }}
+          onChange={onChange}
+        />
       )}
     </>
   );

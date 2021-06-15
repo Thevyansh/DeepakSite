@@ -3,8 +3,11 @@ import _ from 'lodash';
 import CreatableSelect from 'react-select/creatable';
 import slugify from 'slugify';
 import { useDispatch, useSelector } from 'react-redux';
-import { db, timestamp } from '../../../../firebase/firebase';
-import { postCategoriesChanged, selectPostData } from '../../../../store/post';
+import { db, timestamp } from '../../../../../firebase/firebase';
+import {
+  postCategoriesChanged,
+  selectPostData,
+} from '../../../../../store/post';
 import { StyledCategories } from './styles';
 
 const Categories = () => {
@@ -33,7 +36,7 @@ const Categories = () => {
     const name = _.startCase(_.toLower(value));
     setSuggested({ ...suggested, loading: true });
     try {
-      handleChange([...categories, { value: id, label: name }]);
+      handleChange([...state, { value: id, label: name }]);
       const createAt = timestamp();
       await collectionRef.doc(id).set({ name, createAt });
     } catch (error) {

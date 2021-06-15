@@ -31,7 +31,9 @@ export const lightTheme = {
   isDark: false,
   fontFamily: `"Mukta", sans-serif`,
   elevation0: '#ffffff',
-  elevation1: '#ffffff',
+  elevation1: `background: #ffffff; box-shadow:0 0px 0.3px rgba(0, 0, 0, 0.02),  0 0px 0.7px rgba(0, 0, 0, 0.028),  0 0px 1.3px rgba(0, 0, 0, 0.035),  0 0px 2.2px rgba(0, 0, 0, 0.042),  0 0px 4.2px rgba(0, 0, 0, 0.05),0 0px 10px rgba(0, 0, 0, 0.07)`,
+  elevation2: `background: #ffffff; box-shadow: 0 0px 0.6px rgba(0, 0, 0, 0.02),  0 0px 1.3px rgba(0, 0, 0, 0.028),  0 0px 2.5px rgba(0, 0, 0, 0.035),  0 0px 4.5px rgba(0, 0, 0, 0.042),  0 0px 8.4px rgba(0, 0, 0, 0.05),  0 0px 20px rgba(0, 0, 0, 0.07)`,
+  elevation3: `background: #ffffff; box-shadow:  0 0px 0.8px rgba(0, 0, 0, 0.02),  0 0px 2px rgba(0, 0, 0, 0.028), 0 0px 3.8px rgba(0, 0, 0, 0.035),  0 0px 6.7px rgba(0, 0, 0, 0.042),  0 0px 12.5px rgba(0, 0, 0, 0.05), 0 0px 30px rgba(0, 0, 0, 0.07)`,
 };
 
 export const darkTheme = {
@@ -64,6 +66,14 @@ export const darkTheme = {
   black: '#000000',
   isDark: true,
   fontFamily: `"Mukta", sans-serif`,
-  elevation0: '#252525',
-  elevation1: '#333333',
+  elevation0: `background: #121212`,
+  elevation1: `background: #1D1D1D`,
+  elevation2: `background: #212121`,
+  elevation3: `background: #242424`,
+  elevation4: `background: #272727`,
+  elevation5: `background: #2C2C2C`,
+  elevation6: `background: #2D2D2D`,
+  elevation7: `background: #323232`,
+  elevation8: `background: #353535`,
+  elevation9: `background: #373737`,
 };

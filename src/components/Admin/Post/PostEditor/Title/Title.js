@@ -2,7 +2,7 @@ import { rgba } from 'polished';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { postTitleChange, selectPostData } from '../../../../store/post';
+import { postTitleChange, selectPostData } from '../../../../../store/post';
 
 const StyledTitle = styled.input`
   width: 100%;

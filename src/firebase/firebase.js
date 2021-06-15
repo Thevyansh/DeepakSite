@@ -20,16 +20,23 @@ import 'firebase/storage';
 //   appId: '1:498678327502:web:779700c9be80d0bf3dc89f',
 //   measurementId: 'G-MTXFC4MWDG',
 // };
-
 const firebaseConfig = {
-  apiKey: 'AIzaSyAfq65PtFRjtVQO4LzGalGOxNgxyxD67HY',
-  authDomain: 'acharyam-dev.firebaseapp.com',
-  projectId: 'acharyam-dev',
-  storageBucket: 'acharyam-dev.appspot.com',
-  messagingSenderId: '192150708693',
-  appId: '1:192150708693:web:59dd252b9df6a5b645dd5c',
-  measurementId: 'G-WG2KPZFQRS',
+  apiKey: 'AIzaSyCfWkYY4Wj9BLiFJdEHyl4hE9B_sT6yAwQ',
+  authDomain: 'deepak-test-bang.firebaseapp.com',
+  projectId: 'deepak-test-bang',
+  storageBucket: 'deepak-test-bang.appspot.com',
+  messagingSenderId: '774803942983',
+  appId: '1:774803942983:web:3a774b719146406ec3cb62',
 };
+// const firebaseConfig = {
+//   apiKey: 'AIzaSyAfq65PtFRjtVQO4LzGalGOxNgxyxD67HY',
+//   authDomain: 'acharyam-dev.firebaseapp.com',
+//   projectId: 'acharyam-dev',
+//   storageBucket: 'acharyam-dev.appspot.com',
+//   messagingSenderId: '192150708693',
+//   appId: '1:192150708693:web:59dd252b9df6a5b645dd5c',
+//   measurementId: 'G-WG2KPZFQRS',
+// };
 
 const app = firebase.initializeApp(firebaseConfig);
 

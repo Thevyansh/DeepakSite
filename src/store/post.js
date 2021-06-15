@@ -7,7 +7,6 @@ const initialState = {
   publishModal: false,
   isDraft: false,
   lastSaved: 0,
-  editorLoading: true,
   data: {
     title: '',
     content: '',
@@ -16,6 +15,7 @@ const initialState = {
     tags: [],
     publishDate: Date.now(),
     private: false,
+    createdAt: Date.now(),
   },
 };
 
@@ -23,6 +23,15 @@ const postSlice = createSlice({
   name: 'post',
   initialState,
   reducers: {
+    postInitialized: (post, action) => {
+      post.data.title = action.payload.title;
+      post.data.content = action.payload.content;
+      post.data.categories = action.payload.categories;
+      post.data.tags = action.payload.tags;
+      post.data.featuredImage = action.payload.featuredImage;
+      post.isLoading = false;
+    },
+    // DATACHANGE
     postDataChanged: (post) => {
       post.isLoading = true;
     },
@@ -49,75 +58,59 @@ const postSlice = createSlice({
     postTagsChanged: (post, action) => {
       post.data.tags = action.payload;
     },
-
     postPublishDateChanged: (post, action) => {
       post.data.publishDate = action.payload;
     },
     postLoading: (post, action) => {
       post.isLoading = true;
     },
-    postInitialized: (post, action) => {
-      post.data.title = action.payload.title;
-      post.data.content = action.payload.content;
-      post.data.categories = action.payload.categories;
-      post.data.tags = action.payload.tags;
-      post.data.featuredImage = action.payload.featuredImage;
-      post.isLoading = false;
-      post.editorLoading = false;
-    },
     postContentChanged: (post, action) => {
       post.data.content = action.payload;
     },
+
+    // SAVING
+    postUpdated: (post) => {
+      post.isLoading = false;
+    },
+    postDataLoaded: (post, action) => {
+      post.data = action.payload;
+      post.isLoading = false;
+    },
+
     postLocalSaved: (post) => {
       post.lastSaved = Date.now();
     },
 
     resetPost: (post) => {
-      post.data = {
-        title: '',
-        content: '',
-        featuredImage: '',
-        categories: [],
-        tags: [],
-        createdAt: '',
-        private: false,
-      };
+      post.data = initialState.data;
+      post.isLoading = false;
     },
   },
 });
 
 export const {
+  postInitialized,
   postDataChanged,
   postTitleChange,
   postImageChanged,
   postCategoriesChanged,
   postTagsChanged,
   postPublishModal,
+  postContentChanged,
+  postPublishDateChanged,
+
+  postLocalSaved,
   postDrafted,
   postPublished,
-  postInitialized,
-  postLocalSaved,
-  postContentChanged,
+  postUpdated,
+  postLoading,
+  postDataLoaded,
   resetPost,
-  postPublishDateChanged,
 } = postSlice.actions;
 
 // ACTION CREATORS
 
-export const getPostLocal = () => (dispatch) => {
-  const postData = window.localStorage.getItem('post');
-
-  if (postData) {
-    return dispatch(postInitialized(JSON.parse(postData)));
-  }
-  return dispatch(postInitialized(initialState));
-};
-
-export const savePostLocal = () => (dispatch, getState) => {
-  const postData = getState().entities.post.data;
-  window.localStorage.setItem('post', JSON.stringify(postData));
-  dispatch(postLocalSaved());
-};
+// CREATE
 
 export const createDraft = () => async (dispatch, getState) => {
   const postData = getState().entities.post.data;
@@ -148,15 +141,76 @@ export const createPost = () => async (dispatch, getState) => {
   }
 };
 
+// UPDATE
+export const loadPostDataById = (id) => async (dispatch, getState) => {
+  dispatch(postLoading());
+  try {
+    const postData = (await db.collection('posts').doc(id).get()).data();
+    postData.publishDate = postData.publishDate.toMillis();
+    postData.createdAt = postData.createdAt.toMillis();
+    dispatch(postDataLoaded(postData));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updatePost = (id) => async (dispatch, getState) => {
+  dispatch(postLoading());
+  const postData = getState().entities.post.data;
+  try {
+    const postRef = await db
+      .collection('posts')
+      .doc(id)
+      .update({
+        ...postData,
+        createdAt: ts.fromMillis(postData.createdAt),
+        publishDate: ts.fromMillis(postData.publishDate),
+      });
+    dispatch(postUpdated());
+  } catch (e) {
+    dispatch(errorAdded({ message: e.message }));
+  }
+};
+// UTILS
+
 export const reset = () => (dispatch) => {
   window.localStorage.removeItem('post');
   dispatch(resetPost());
+};
+
+// DELETE
+
+export const deletePost = (id) => async (dispatch, getState) => {
+  dispatch(postLoading());
+  try {
+    await db.collection('posts').doc(id).delete();
+    window.localStorage.removeItem('post');
+    dispatch(resetPost());
+  } catch (e) {
+    dispatch(errorAdded({ message: e.message }));
+  }
+};
+
+// LOCAL
+
+export const getPostLocal = () => (dispatch) => {
+  const postData = window.localStorage.getItem('post');
+
+  if (postData) {
+    return dispatch(postInitialized(JSON.parse(postData)));
+  }
+  return dispatch(postInitialized(initialState));
+};
+
+export const savePostLocal = () => (dispatch, getState) => {
+  const postData = getState().entities.post.data;
+  window.localStorage.setItem('post', JSON.stringify(postData));
+  dispatch(postLocalSaved());
 };
 
 export const selectPost = (state) => state.entities.post;
 export const selectPostData = (state) => state.entities.post.data;
 export const selectPublishModal = (state) => state.entities.post.publishModal;
 export const selectPostLoading = (state) => state.entities.post.isLoading;
-export const selectEditorLoading = (state) => state.entities.post.editorLoading;
 
 export default postSlice.reducer;

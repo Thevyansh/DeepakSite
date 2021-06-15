@@ -4,9 +4,12 @@ import styled from 'styled-components';
 
 import { animated } from 'react-spring';
 import { formatDistanceToNow } from 'date-fns';
-import StyledIconButton from '../shared/Button/StyledIconButton';
+import { useSelector } from 'react-redux';
+import StyledLink from '../shared/Link/StyledLink';
 
-import { share } from '../shared/Icons/Icons';
+import { edit } from '../shared/Icons/Icons';
+import IconLink from '../shared/Link/IconLink';
+import { selectUser } from '../../store/auth';
 
 const StyledPost = styled(animated.div)`
   padding: 15px;
@@ -21,8 +24,7 @@ const StyledPost = styled(animated.div)`
   margin-bottom: 40px;
   display: flex;
   flex-direction: column;
-  box-shadow: ${(props) => props.theme.shadowSoft};
-  background: ${(p) => p.theme.elevation0};
+  ${(p) => p.theme.elevation2}
 `;
 const StyledCardHeader = styled.div`
   margin-bottom: auto;
@@ -30,6 +32,7 @@ const StyledCardHeader = styled.div`
   display: flex;
   gap: 5px;
   align-items: center;
+  justify-content: center;
   text-align: start;
   a {
     color: ${(props) => props.theme.text};
@@ -114,30 +117,32 @@ const StyledTextContainer = styled.div`
 // `;
 const Post = ({
   post: { id, title, categories, featuredImage, publishDate, tags },
-}) => (
-  <StyledPost>
-    <StyledCardHeader>
-      <StyledTextContainer>
-        <span>{formatDistanceToNow(publishDate, { addSuffix: true })}</span>
-        <Link to={`/posts/${id}`}>{title}</Link>
-      </StyledTextContainer>
-      <StyledIconButton width="2rem" height="2rem" padding="0">
-        <span>{share}</span>
-      </StyledIconButton>
-    </StyledCardHeader>
-    <StyledCardImage>
-      <Link to={`/posts/${id}`}>
-        <img src={featuredImage} alt="img" />
-      </Link>
-    </StyledCardImage>
-    {/* <ScrollContainer>
+}) => {
+  const user = useSelector(selectUser);
+  return (
+    <StyledPost>
+      <StyledCardHeader>
+        <StyledTextContainer>
+          <span>{formatDistanceToNow(publishDate, { addSuffix: true })}</span>
+          <Link to={`/posts/${id}`}>{title}</Link>
+        </StyledTextContainer>
+
+        {user && <IconLink to={`/posts/${id}/edit`}>{edit}</IconLink>}
+      </StyledCardHeader>
+      <StyledCardImage>
+        <Link to={`/posts/${id}`}>
+          <img src={featuredImage} alt="img" />
+        </Link>
+      </StyledCardImage>
+      {/* <ScrollContainer>
       <StyledCategories>
         {categories.map((category) => (
           <div>{category}</div>
         ))}
       </StyledCategories>
     </ScrollContainer> */}
-  </StyledPost>
-);
+    </StyledPost>
+  );
+};
 
 export default Post;

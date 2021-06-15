@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import {
   postPublishModal,
@@ -30,7 +31,7 @@ const StyledPublishModel = styled.div`
     margin-left: auto;
   }
   box-shadow: ${(props) => props.theme.shadowSoft};
-  background: ${(props) => props.theme.elevation1};
+  ${(props) => props.theme.elevation5};
 `;
 
 const Backdrop = styled.div`
@@ -47,13 +48,14 @@ const PublishModal = () => {
   const dispatch = useDispatch();
   const publishModal = useSelector(selectPublishModal);
   const { publishDate } = useSelector(selectPostData);
-
+  const history = useHistory();
   useEffect(() => {
     dispatch(postPublishDateChanged(Date.now()));
   }, [dispatch, publishModal]);
 
   const handlePublish = () => {
     dispatch(createPost());
+    history.push('/');
   };
 
   return (

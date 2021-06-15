@@ -1,11 +1,7 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import Categories from './Categories/Categories';
-import Tags from './Tags/Tags';
-import Title from './Title/Title';
+
 import StyledButton from '../../shared/Button/StyledButton';
-import Edit from '../../../pages/Edit/Edit';
 import {
   selectPostData,
   postPublishModal,
@@ -13,65 +9,12 @@ import {
   getPostLocal,
   reset,
 } from '../../../store/post';
-import FeaturedImage from './FeaturedImage/FeaturedImage';
-import PublishModal from './Publish Modal/PublishModal';
+import PublishModal from './PublishModal/PublishModal';
 import { errorAdded } from '../../../store/error';
+import { StyledEditorContainer, StyledHeader } from './styles';
+import PostEditor from './PostEditor/PostEditor';
 
-const StyledEditorContainer = styled.div`
-  margin: 20px;
-  ${StyledButton} {
-    box-shadow: ${(props) => props.theme.shadowSoft};
-  }
-`;
-
-const StyledHeader = styled.div`
-  max-width: 1600px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-start;
-  margin: 0 auto;
-  margin-bottom: 3rem;
-  gap: 2rem;
-`;
-
-const StyledEditing = styled.div`
-  display: flex;
-  background: ${(props) => props.theme.background};
-  padding: 5rem;
-  border-radius: 24px;
-  max-width: 1600px;
-  margin: 0 auto;
-  gap: 5rem;
-  flex-wrap: wrap;
-  box-shadow: ${(props) => props.theme.shadowSoft};
-`;
-// const StyledPostContainer = styled.div`
-//   /* flex: 1 1 700px;
-//   display: flex;
-//   flex-direction: column;
-//   min-width: 600px;
-//   @media (max-width: 760px) {
-//     min-width: initial;
-//     width: 100%;
-//   } */
-// `;
-
-const StyledOptions = styled.div`
-  flex: 1 1 300px;
-  min-width: 300px;
-  max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  gap: 50px;
-  h3 {
-    margin-bottom: 10px;
-  }
-  @media (max-width: 1190px) {
-    max-width: initial;
-  }
-`;
-
-const Create = () => {
+const CreatePost = () => {
   const { title } = useSelector(selectPostData);
 
   const dispatch = useDispatch();
@@ -157,18 +100,10 @@ const Create = () => {
           Publish
         </StyledButton>
       </StyledHeader>
-      <StyledEditing>
-        <Title />
-        <Edit />
-        <StyledOptions>
-          <FeaturedImage />
-          <Categories />
-          <Tags />
-        </StyledOptions>
-      </StyledEditing>
+      <PostEditor />
       <PublishModal />
     </StyledEditorContainer>
   );
 };
 
-export default Create;
+export default CreatePost;

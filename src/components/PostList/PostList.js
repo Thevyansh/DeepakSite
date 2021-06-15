@@ -19,9 +19,12 @@ const StyledPostGrid = styled.div`
 const PostList = () => {
   const dispatch = useDispatch();
   const loader = useRef(null);
-  const { hasMore, list: posts, isLoading, firstLoad } = useSelector(
-    selectPosts
-  );
+  const {
+    hasMore,
+    list: posts,
+    isLoading,
+    firstLoad,
+  } = useSelector(selectPosts);
 
   useEffect(() => {
     const options = {

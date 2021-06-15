@@ -23,6 +23,8 @@ import Signup from './components/Auth/Signup/Signup';
 import Signin from './components/Auth/Signin/Signin';
 import PrivateRoute from './utils/PrivateRoute';
 import ForgotPassword from './components/Auth/ForgotPassword/ForgotPassword';
+import CreatePost from './components/Admin/Post/CreatePost';
+import EditPost from './components/Admin/Post/EditPost';
 
 function App() {
   const location = useLocation();
@@ -58,7 +60,9 @@ function App() {
             <Switch location={location} key={location.pathname}>
               <Route path="/posts/:id" exact component={PostDetails} />
               <PrivateRoute path="/admin" component={Admin} />
-              <Route path="/edit" exact component={Edit} />
+              <PrivateRoute path="/createPost" component={CreatePost} />
+              <PrivateRoute path="/posts/:id/edit" component={EditPost} />
+              <Route path="/ edit" exact component={Edit} />
               <Route path="/signup" exact component={Signup} />
               <Route path="/signin" exact component={Signin} />
               <Route path="/forgot-password" exact component={ForgotPassword} />

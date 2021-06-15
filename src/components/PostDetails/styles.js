@@ -19,8 +19,7 @@ export const CKContent = styled.div`
   --ck-font-size-base: 16px;
 
   /* Helper variables to avoid duplication in the colors. */
-  --ck-custom-background: ${(props) =>
-    props.theme.elevation1 ? props.theme.elevation1 : props.theme.background};
+  --ck-custom-background: ${(props) => props.theme.background};
   --ck-custom-foreground: ${(props) => props.theme.body};
   --ck-custom-border: ${(props) => props.theme.highlight};
   --ck-custom-white: ${(props) => props.theme.text};
@@ -533,8 +532,8 @@ export const StyledTitle = styled.h1`
   padding: 2rem 4rem;
   position: absolute;
   bottom: 0;
-  box-shadow: ${(props) => props.theme.shadowSoft};
-  background: ${(p) => p.theme.elevation1};
+  ${(p) => p.theme.elevation3};
+
   margin: 0 2rem 3rem 2rem;
 `;
 export const StyledContainer = styled.div`
@@ -552,6 +551,7 @@ export const Image = styled.div`
   height: 100%;
   overflow: hidden;
   text-align: center;
+  z-index: 5;
 
   img {
     max-width: 100%;

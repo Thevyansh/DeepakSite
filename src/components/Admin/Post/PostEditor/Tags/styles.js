@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { rgba } from 'polished';
-import Button from '../../../shared/Button/Button';
+import Button from '../../../../shared/Button/Button';
 
 export const StyledTags = styled.div`
   ${'.rs'} {

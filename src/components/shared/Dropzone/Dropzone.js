@@ -64,6 +64,7 @@ const ImagePreLoader = styled.div`
     animation-play-state: running;
     animation-name: image-preloader-spin;
   }
+
   &::after {
     content: '';
     position: absolute;
@@ -82,7 +83,7 @@ const ImagePreLoader = styled.div`
   }
 `;
 
-const Dropzone = ({ setFileURL }) => {
+const Dropzone = ({ setFileURL, imageUrl }) => {
   const [preview, setPreview] = useState({});
   const [uploading, setUploading] = useState(false);
   const [file, setFile] = useState(null);
@@ -129,6 +130,10 @@ const Dropzone = ({ setFileURL }) => {
             </>
           ) : isDragActive ? (
             <p>Drop the files here ...</p>
+          ) : imageUrl ? (
+            <ImageContainer>
+              <img src={imageUrl} alt="img" />
+            </ImageContainer>
           ) : (
             <>
               <span>{fileIcon}</span>

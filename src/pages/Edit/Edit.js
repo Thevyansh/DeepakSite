@@ -20,8 +20,7 @@ const StyledEdit = styled.div`
   --ck-font-size-base: 14px;
 
   /* Helper variables to avoid duplication in the colors. */
-  --ck-custom-background: ${(props) =>
-    props.theme.elevation1 ? props.theme.elevation1 : props.theme.background};
+  --ck-custom-background: ${(props) => props.theme.background};
   --ck-custom-foreground: ${(props) => props.theme.body};
   --ck-custom-border: ${(props) => props.theme.highlight};
   --ck-custom-white: ${(props) => props.theme.text};
